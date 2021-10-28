@@ -1,36 +1,27 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  image: string;
-}
+import { IProduct } from "../../types/product";
 
 interface CartProps {
   children: ReactNode;
 }
 
 interface CartProviderData {
-  cart: Product[];
-  addProduct: (product: Product) => void;
-  deleteProduct: (product: Product) => void;
+  cart: IProduct[];
+  addProduct: (product: IProduct) => void;
+  deleteProduct: (productIndex: number) => void;
 }
 
 const CartContext = createContext<CartProviderData>({} as CartProviderData);
 
 export const CartProvider = ({ children }: CartProps) => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<IProduct[]>([] as IProduct[]);
 
-  const addProduct = (product: Product) => {
+  const addProduct = (product: IProduct) => {
     setCart([...cart, product]);
   };
 
-  const deleteProduct = (productToBeDeleted: Product) => {
-    const newCart = cart.filter(
-      (product) => product.title !== productToBeDeleted.title
-    );
+  const deleteProduct = (productToBeDeleted: number) => {
+    const newCart = cart.filter((_, index) => index !== productToBeDeleted);
 
     setCart(newCart);
   };
