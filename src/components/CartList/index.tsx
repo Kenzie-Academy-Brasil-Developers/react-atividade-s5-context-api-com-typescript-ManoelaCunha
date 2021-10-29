@@ -1,5 +1,6 @@
-import { IProduct } from "../../types/product";
 import ProductCard from "../ProductCard";
+import { IProduct } from "../../types/product";
+import { ContainerCart } from "./styles";
 
 interface ProductsListProps {
   products: IProduct[];
@@ -8,7 +9,7 @@ interface ProductsListProps {
 
 const CartList = ({ products, isInTheCart = false }: ProductsListProps) => {
   return (
-    <>
+    <ContainerCart>
       {products.map((product, index) => (
         <ProductCard
           key={index}
@@ -17,7 +18,7 @@ const CartList = ({ products, isInTheCart = false }: ProductsListProps) => {
           isInTheCart={isInTheCart}
         />
       ))}
-    </>
+    </ContainerCart>
   );
 };
 

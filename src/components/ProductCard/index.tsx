@@ -1,3 +1,4 @@
+import { Button, Paper, Typography } from "@material-ui/core";
 import { useCart } from "../../providers/cart";
 import { IProduct } from "../../types/product";
 
@@ -13,24 +14,56 @@ const ProductCard = ({
   isInTheCart = false,
 }: ProductCardProps) => {
   const { title, price, image } = product;
-
   const { addProduct, deleteProduct } = useCart();
 
+  const handleAddProduct = () => {
+    addProduct(product);
+  };
+
+  const handleDeleteProduct = () => {
+    deleteProduct(Number(productIndex));
+  };
+
+  const boxCard = {
+    width: "250px",
+    margin: "40px 10px",
+    padding: "5px",
+  };
+
+  const btnCard = {
+    margin: "10px",
+  };
+
   return (
-    <div style={{ width: "300px", border: "1px solid black" }}>
+    <Paper elevation={5} style={boxCard}>
       <img src={image} alt={title} width="100" height="180" />
-      <p>{title}</p>
-      <p>{price}</p>
+      <Typography variant="subtitle1">{title}</Typography>
+      <Typography variant="h6" color="primary">
+        {price.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })}
+      </Typography>
       {isInTheCart ? (
-        <button onClick={() => deleteProduct(Number(productIndex))}>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={btnCard}
+          onClick={handleDeleteProduct}
+        >
           Remover do Carrinho
-        </button>
+        </Button>
       ) : (
-        <button onClick={() => addProduct(product)}>
+        <Button
+          variant="contained"
+          color="primary"
+          style={btnCard}
+          onClick={handleAddProduct}
+        >
           Adicionar no Carrinho
-        </button>
+        </Button>
       )}
-    </div>
+    </Paper>
   );
 };
 
